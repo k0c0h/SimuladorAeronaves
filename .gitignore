@@ -1,0 +1,16 @@
+# Carpetas de compilacion
+[Bb]in/
+[Oo]bj/
+
+# Archivos de Visual Studio
+.vs/
+*.user
+*.suo
+*.cache
+
+# Archivos temporales
+*.tmp
+*.log
+
+# Resultados de pruebas
+TestResults/
