@@ -6,7 +6,15 @@ using System.Threading.Tasks;
 
 namespace SimuladorAeronaves.Geometria
 {
-    internal class Punto2D
+    public class Punto2D
     {
+        public double X { get; set; }
+        public double Y { get; set; }
+
+        public Punto2D(double x, double y)
+        {
+            X = x;
+            Y = y;
+        }
     }
 }
