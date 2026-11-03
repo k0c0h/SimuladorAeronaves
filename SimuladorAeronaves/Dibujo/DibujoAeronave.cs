@@ -12,35 +12,59 @@ namespace SimuladorAeronaves.Dibujo
     {
         public void Dibujar(Graphics g, PointF[] vertices, int ancho, int alto, float escala)
         {
-            // Comprobamos que existan puntos para dibujar
             if (vertices == null || vertices.Length < 3 || escala <= 0)
             {
                 return;
             }
 
-            // Calculamos el centro del panel
             float centroX = ancho / 2f;
             float centroY = alto / 2f;
 
-            // Guardamos los puntos que se dibujaran en pantalla
             PointF[] puntos = new PointF[vertices.Length];
 
             for (int i = 0; i < vertices.Length; i++)
             {
-                // Convertimos las coordenadas del plano a la pantalla
                 float x = centroX + vertices[i].X * escala;
                 float y = centroY - vertices[i].Y * escala;
 
                 puntos[i] = new PointF(x, y);
             }
 
-            // Dibujamos la aeronave utilizando sus vertices
-            using (Brush pincel = new SolidBrush(Color.FromArgb(26, 152, 194)))
+            // La aeronave se construye con varios polígonos: fuselaje, alas y cola.
+            PointF[] fuselaje = ObtenerPoligono(puntos, 0, 1, 3, 5, 7, 9);
+            PointF[] alas = ObtenerPoligono(puntos, 1, 2, 3, 7, 8, 9);
+            PointF[] estabilizadores = ObtenerPoligono(puntos, 3, 4, 5, 6, 7);
+
+            using (Brush pincelFuselaje = new SolidBrush(Color.FromArgb(26, 152, 194)))
+            using (Brush pincelAlas = new SolidBrush(Color.FromArgb(35, 122, 170)))
+            using (Brush pincelCola = new SolidBrush(Color.FromArgb(45, 104, 150)))
             using (Pen lapiz = new Pen(Color.FromArgb(180, 235, 250), 2))
             {
-                g.FillPolygon(pincel, puntos);
+                g.FillPolygon(pincelAlas, alas);
+                g.FillPolygon(pincelCola, estabilizadores);
+                g.FillPolygon(pincelFuselaje, fuselaje);
                 g.DrawPolygon(lapiz, puntos);
+
+                // La linea central permite distinguir el fuselaje y la direccion de vuelo.
+                using (Pen lapizFuselaje = new Pen(Color.FromArgb(220, 250, 255), 2))
+                {
+                    PointF nariz = puntos[0];
+                    PointF cola = puntos[5];
+                    g.DrawLine(lapizFuselaje, nariz, cola);
+                }
             }
+        }
+
+        private PointF[] ObtenerPoligono(PointF[] puntos, params int[] indices)
+        {
+            PointF[] poligono = new PointF[indices.Length];
+
+            for (int i = 0; i < indices.Length; i++)
+            {
+                poligono[i] = puntos[indices[i]];
+            }
+
+            return poligono;
         }
     }
 }

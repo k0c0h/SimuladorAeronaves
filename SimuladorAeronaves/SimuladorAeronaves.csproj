@@ -54,12 +54,12 @@
     <Compile Include="FrmSimulador.Designer.cs">
       <DependentUpon>FrmSimulador.cs</DependentUpon>
     </Compile>
+    <Compile Include="Modelos\Aeronave.cs" />
     <Compile Include="Geometria\Matriz3x3.cs" />
     <Compile Include="Geometria\Punto2D.cs" />
     <Compile Include="Geometria\Transformacion.cs" />
     <Compile Include="Logica\GestorRecorrido.cs" />
     <Compile Include="Logica\ValidadorDatos.cs" />
-    <Compile Include="Modelos\Aeronave.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FrmSimulador.resx">
